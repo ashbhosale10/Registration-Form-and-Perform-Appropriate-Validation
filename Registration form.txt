@@ -1,0 +1,236 @@
+Q> Create registration form given below. Also perform appropriate validation.
+
+xml 1
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Q1> 5- Create a Registration Form and Perform Appropriate Validation."
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:background="@color/teal_200"
+        android:textColor="@color/black">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="REGISTRATION"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Name :"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_baseline_person_24">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/eid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Emailid :"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/ic_baseline_email_24">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password :"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/ic_baseline_password_24">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Age :"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/ic_baseline_directions_run_24">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/phoneno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Phone Number :"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/ic_baseline_contact_phone_24">
+
+    </EditText>
+
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT HERE"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp">
+
+    </Button>
+
+
+</LinearLayout>
+
+java1
+
+package com.example.registrationform;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView textView;
+    EditText name,eid,password,age,phoneno;
+    Button btn;
+    boolean isAllFieldsChecked = false;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+       name = findViewById(R.id.name);
+       eid = findViewById(R.id.eid);
+       password = findViewById(R.id.password);
+       age = findViewById(R.id.age);
+       phoneno = findViewById(R.id.phoneno);
+       btn = findViewById(R.id.btn);
+       btn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               isAllFieldsChecked = CheckAllFields();
+               if(isAllFieldsChecked){
+                   Intent i = new Intent(MainActivity.this,MainActivity2.class);
+                   startActivity(i);
+               }
+           }
+       });
+
+
+    }
+
+    private boolean CheckAllFields() {
+
+        if (name.length() == 0) {
+            name.setError("Name is Required");
+            return false;
+        }
+        if (eid.length() == 0) {
+            eid.setError("Email is Required");
+            return false;
+        }
+        if (password.length() == 0) {
+            password.setError("password is Required");
+            return false;
+        } else if (password.length() < 8) {
+            password.setError("Password must be minimum 8 Character ");
+            return false;
+        }
+
+        if (age.length() == 0) {
+            age.setError("age is Required");
+            return false;
+        }
+        if (phoneno.length() <= 10) {
+            phoneno.setError("In Valid Phoneno");
+            return false;
+        }
+
+        return true;
+    }
+
+    }
+
+
+xml 2
+
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WELCOME"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registration is Successfully"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"
+        android:textSize="20dp">
+
+    </TextView>
+
+
+
+
+</LinearLayout>
+
+
+java 2
+
+package com.example.registrationform;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class MainActivity2 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+    }
+}
